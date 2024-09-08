@@ -48,7 +48,15 @@ DWORD WINAPI ConsoleThread(LPVOID lpParameter)
         HWND consoleWindow = GetConsoleWindow();
         if (consoleWindow)
         {
-            ShowWindow(consoleWindow, SW_HIDE);
+            WINDOWPLACEMENT wp;
+            wp.length = sizeof(WINDOWPLACEMENT);
+            if (GetWindowPlacement(consoleWindow, &wp))
+            {
+                if (wp.showCmd != SW_HIDE)
+                {
+                    ShowWindow(consoleWindow, SW_HIDE);
+                }
+            }
         }
     }
     return 0;

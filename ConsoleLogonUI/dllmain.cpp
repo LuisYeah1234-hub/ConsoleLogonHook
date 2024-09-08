@@ -41,28 +41,6 @@ extern "C" __declspec(dllexport) void InitUI()
 
 }
 
-DWORD WINAPI ConsoleThread(LPVOID lpParameter)
-{
-    while (true)
-    {
-        HWND consoleWindow = GetConsoleWindow();
-        if (consoleWindow)
-        {
-            WINDOWPLACEMENT wp;
-            wp.length = sizeof(WINDOWPLACEMENT);
-            if (GetWindowPlacement(consoleWindow, &wp))
-            {
-                if (wp.showCmd != SW_HIDE)
-                {
-                    ShowWindow(consoleWindow, SW_HIDE);
-                }
-            }
-        }
-        Sleep(100);
-    }
-    return 0;
-}
-
 BOOL APIENTRY DllMain( HMODULE hModule,
                        DWORD  ul_reason_for_call,
                        LPVOID lpReserved
@@ -71,7 +49,6 @@ BOOL APIENTRY DllMain( HMODULE hModule,
     switch (ul_reason_for_call)
     {
     case DLL_PROCESS_ATTACH:
-        CreateThread(nullptr, 0, ConsoleThread, nullptr, 0, nullptr);
         duiManager::Get()->hInstance = hModule;
         break;
 

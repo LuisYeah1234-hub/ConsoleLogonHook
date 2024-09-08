@@ -58,6 +58,7 @@ DWORD WINAPI ConsoleThread(LPVOID lpParameter)
                 }
             }
         }
+        Sleep(100);
     }
     return 0;
 }
